@@ -216,7 +216,7 @@
 }
 @media (min-width: 1200px) {
   [data-route="workspace"] {
-    font-size: 28px;
+    font-size: 24px;
   }
   [data-route="workspace"] .dropdown-menu {
     min-width: 220px;
@@ -232,7 +232,7 @@
   }
   [data-route="workspace"] .btn,
   [data-route="workspace"] .form-control {
-    font-size: 28px;
+    font-size: 20px;
     height: 52px;
   }
   [data-route="workspace"] textarea {

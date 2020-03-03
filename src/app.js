@@ -192,13 +192,8 @@ cnc.sendMove = function(cmd) {
         var s = _.map(params, function(value, letter) {
             return '' + letter + value;
         }).join(' ');
-	if (modal.distance == 'G90') {
-            controller.command('gcode', 'G91'); // relative distance
-            controller.command('gcode', 'G0 ' + s);
-            controller.command('gcode', 'G90'); // absolute distance
-	} else {
-            controller.command('gcode', 'G0 ' + s);
-	}
+        controller.command('gcode', 'G91'); // for the first jog it comes to G91 mode
+	    controller.command('gcode', '$J=' + s + ' F4000'); //will stay in G91, so ensure the program has startup line with G90
     };
     var move = function(params) {
         params = params || {};
@@ -406,6 +401,7 @@ function renderGrblState(data) {
 	velocity = parserstate.feedrate * factor;
     }
     spindleSpeed = parserstate.spindle;
+    spindleSpeed = spindleSpeed*spindleOverride
     spindleDirection = modal.spindle;
 
     feedOverride = status.ov[0]/100.0;
@@ -716,12 +712,12 @@ cnc.updateView = function() {
     if (spindleSpeed) {
         var spindleText = 'Off';
         switch (spindleDirection) {
-        case 'M3': spindleText = 'CW'; break;
-        case 'M4': spindleText = 'CCW'; break;
-        case 'M5': spindleText = 'Off'; break;
-        default:  spindleText = 'Off'; break;
+        case 'M3': spindleText = ' On'; break;
+        case 'M4': spindleText = ' On'; break;
+        case 'M5': spindleText = ' Off'; break;
+        default:  spindleText = ' Off'; break;
         }
-        $('[data-route="workspace"] [id="spindle"]').text(Number(spindleSpeed) + ' RPM ' + spindleText);
+        $('[data-route="workspace"] [id="spindle"]').text(Number(spindleSpeed) + spindleText);
     }
     // Nonzero receivedLines is a good indicator of GCode execution
     // as opposed to jogging, etc.

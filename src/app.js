@@ -1099,7 +1099,34 @@ $(document).on('keydown keyup', function(event){
 	case "Escape":
 	case "Pause":
 	    clickon('.btn-pause');
-	    break;
+        break;
+    case "q":
+        cnc.controller.command('feedOverride', -10);
+        break;
+    case "w":
+        cnc.controller.command('feedOverride', 0);
+        break;
+    case "e":
+        cnc.controller.command('feedOverride', +10);
+        break;
+    case "a":
+        cnc.controller.command('spindleOverride', -10);
+        break;
+    case "s":
+        cnc.controller.command('spindleOverride', 0);
+        break;
+    case "d":
+        cnc.controller.command('spindleOverride', +10);
+        break;
+    case "z":
+        cnc.controller.command('rapidOverride', 25);
+        break;
+    case "x":
+        cnc.controller.command('rapidOverride', 50);
+        break;
+    case "c":
+        cnc.controller.command('rapidOverride', 100);
+        break;
 	case "Shift":
 	    shiftDown = true;
 	    break;

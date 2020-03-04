@@ -991,9 +991,16 @@ stopGCode = function() {
 }
 
 cnc.probe = function() {
-    oldFilename = cnc.filename;
-    probing = true;
-    controller.command('watchdir:load', "Probe.nc");
+    //oldFilename = cnc.filename;
+    //probing = true;
+    //controller.command('watchdir:load', "Probe.nc");
+    controller.command('gcode', 'G91');
+    controller.command('gcode', 'G38.2'+' Z-20'+' F50');
+    controller.command('gcode', 'G90');
+    controller.command('gcode', 'G10'+' L20'+' P1'+' Z10.1');
+    controller.command('gcode', 'G91');
+    controller.command('gcode', 'G0'+' Z20');
+    controller.command('gcode', 'G90');
 }
 
 //
@@ -1074,11 +1081,11 @@ $(document).on('keydown keyup', function(event){
             event.preventDefault();
 	    break;
 	case "ArrowUp":
-	    jogClick('.jog-y-plus');
+	    jogClick('.jog-y-minus');
             event.preventDefault();
 	    break;
 	case "ArrowDown":
-	    jogClick('.jog-y-minus');
+	    jogClick('.jog-y-plus');
             event.preventDefault();
 	    break;
 	case "PageUp":
